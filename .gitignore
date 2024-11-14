@@ -14,7 +14,7 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
+#*.dll
 
 # Fortran module files
 *.mod
@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+*.vs
+*.pdb
+Intermediate
+Platforms
+Saved
+Binaries
+*.sln
+*-0001.dll

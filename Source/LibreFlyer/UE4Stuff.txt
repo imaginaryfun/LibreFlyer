@@ -1,0 +1,48 @@
+GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Test");
+GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, LexToString(Input));
+
+GEngine->AddOnScreenDebugMessage(-1, -1.f, FColor::Red, "Test");
+GEngine->AddOnScreenDebugMessage(-1, -1.f, FColor::Red, LexToString(Input));
+GEngine->AddOnScreenDebugMessage(-1, -1.f, FColor::Red, (TEXT("Button %s"), *LexToString(Index)));
+
+UE_LOG(LogTemp, Error, TEXT("Test"));
+UE_LOG(LogTemp, Error, TEXT("%s"), *LexToString(Input));
+
+UFUNCTION(BlueprintCallable)
+UPROPERTY(EditAnywhere, BlueprintReadWrite)
+
+
+
+virtual void BeginPlay() override;
+void AActor::BeginPlay() {
+	Super::BeginPlay();
+}
+virtual void PostInitializeComponents() override;
+void AActor::PostInitializeComponents() {
+	Super::PostInitializeComponents();
+}
+virtual void Tick(float DeltaTime) override;
+void AActor::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+}
+
+
+
+USTRUCT(BlueprintType)
+struct FMyStruct {
+	GENERATED_BODY()
+
+	FMyStruct() {
+		bMyBool = false;
+		MyFloat = 0;
+	}
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	bool bMyBool;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float MyFloat;
+};
+
+https://dev.epicgames.com/documentation/en-us/unreal-engine/metadata-specifiers?application_version=4.27
+https://dev.epicgames.com/documentation/en-us/unreal-engine/class-specifiers?application_version=4.27
+https://dev.epicgames.com/documentation/en-us/unreal-engine/properties?application_version=4.27
+https://dev.epicgames.com/documentation/en-us/unreal-engine/ufunctions?application_version=4.27
