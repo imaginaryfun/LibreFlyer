@@ -1,0 +1,8 @@
+{
+	"BuildId": "17155196",
+	"Modules": 
+	{
+		"JoystickPlugin": "UE4Editor-JoystickPlugin.dll",
+		"JoystickPluginEditor": "UE4Editor-JoystickPluginEditor.dll"
+	}
+}
