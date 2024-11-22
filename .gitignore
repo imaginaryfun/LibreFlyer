@@ -2,6 +2,6 @@
 Intermediate
 *.sln
 Saved
-#Binaries
-*.pdb
+Binaries
 Content/Developers
+Config
