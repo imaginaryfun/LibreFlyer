@@ -15,18 +15,18 @@ public class LibreFlyer : ModuleRules
 			"InputCore",
 			"DeveloperSettings"
         });
-
 		PrivateDependencyModuleNames.AddRange(new string[] {
 			"PhysicsCore",
-			"UMG"
+			"UMG",
+            "NetCore",
+			"Slate",
+			"SlateCore"
         });
-
-		// Uncomment if you are using Slate UI
-		// PrivateDependencyModuleNames.AddRange(new string[] { "Slate", "SlateCore" });
-		
-		// Uncomment if you are using online features
-		// PrivateDependencyModuleNames.Add("OnlineSubsystem");
-
-		// To include OnlineSubsystemSteam, add it to the plugins section in your uproject file with the Enabled attribute set to true
+        PublicIncludePaths.AddRange(new string[] {
+			"LibreFlyer\\Game",
+            "LibreFlyer\\Interface",
+            "LibreFlyer\\Misc",
+            "LibreFlyer\\World",
+        });		
 	}
 }

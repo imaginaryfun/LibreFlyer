@@ -5,3 +5,5 @@ Saved
 Binaries
 Content/Developers
 Config
+*.dll
+Build

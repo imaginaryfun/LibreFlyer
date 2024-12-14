@@ -12,7 +12,8 @@
 			"AdditionalDependencies": [
 				"Engine",
 				"Slate",
-				"SlateCore"
+				"SlateCore",
+				"UMG"
 			]
 		}
 	],
@@ -62,7 +63,16 @@
 			"Enabled": true
 		},
 		{
-			"Name": "JoystickPlugin",
+			"Name": "OodleNetwork",
+			"Enabled": true
+		},
+		{
+			"Name": "LDAssistant",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/content/51c5a9a0d5f84beba23aab69bed8d28c"
+		},
+		{
+			"Name": "RawInput",
 			"Enabled": true
 		}
 	],

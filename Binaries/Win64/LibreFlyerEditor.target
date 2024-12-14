@@ -192,20 +192,24 @@
 			"Type": "DynamicLibrary"
 		},
 		{
-			"Path": "$(ProjectDir)/Plugins/JoystickPlugin-4.27-Win64/Binaries/Win64/UE4Editor-JoystickPlugin.dll",
+			"Path": "$(EngineDir)/Plugins/Compression/OodleNetwork/Binaries/Win64/UE4Editor-OodleNetworkHandlerComponent.dll",
 			"Type": "DynamicLibrary"
 		},
 		{
-			"Path": "$(ProjectDir)/Plugins/JoystickPlugin-4.27-Win64/Binaries/Win64/UE4Editor-JoystickPlugin.pdb",
-			"Type": "SymbolFile"
-		},
-		{
-			"Path": "$(ProjectDir)/Plugins/JoystickPlugin-4.27-Win64/Binaries/Win64/UE4Editor-JoystickPluginEditor.dll",
+			"Path": "$(EngineDir)/Plugins/Marketplace/LDAssistant/Binaries/Win64/UE4Editor-LDAssistant.dll",
 			"Type": "DynamicLibrary"
 		},
 		{
-			"Path": "$(ProjectDir)/Plugins/JoystickPlugin-4.27-Win64/Binaries/Win64/UE4Editor-JoystickPluginEditor.pdb",
+			"Path": "$(EngineDir)/Plugins/Marketplace/LDAssistant/Binaries/Win64/UE4Editor-LDAssistant.pdb",
 			"Type": "SymbolFile"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Editor/EditorScriptingUtilities/Binaries/Win64/UE4Editor-EditorScriptingUtilities.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/RawInput/Binaries/Win64/UE4Editor-RawInput.dll",
+			"Type": "DynamicLibrary"
 		},
 		{
 			"Path": "$(ProjectDir)/Binaries/Win64/UE4Editor-LibreFlyer.dll",
@@ -1740,7 +1744,19 @@
 			"Type": "RequiredResource"
 		},
 		{
-			"Path": "$(ProjectDir)/Plugins/JoystickPlugin-4.27-Win64/Binaries/Win64/UE4Editor.modules",
+			"Path": "$(EngineDir)/Plugins/Compression/OodleNetwork/Binaries/Win64/UE4Editor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Marketplace/LDAssistant/Binaries/Win64/UE4Editor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Editor/EditorScriptingUtilities/Binaries/Win64/UE4Editor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/RawInput/Binaries/Win64/UE4Editor.modules",
 			"Type": "RequiredResource"
 		},
 		{
@@ -1850,7 +1866,19 @@
 			"Type": "UFS"
 		},
 		{
-			"Path": "$(ProjectDir)/Plugins/JoystickPlugin-4.27-Win64/JoystickPlugin.uplugin",
+			"Path": "$(EngineDir)/Plugins/Compression/OodleNetwork/OodleNetwork.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Marketplace/LDAssistant/LDAssistant.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Editor/EditorScriptingUtilities/EditorScriptingUtilities.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/RawInput/RawInput.uplugin",
 			"Type": "UFS"
 		},
 		{
@@ -17603,10 +17631,6 @@
 		},
 		{
 			"Path": "$(EngineDir)/Binaries/ThirdParty/Python3/Win64/Tools/scripts/win_add2path.py",
-			"Type": "NonUFS"
-		},
-		{
-			"Path": "$(ProjectDir)/Plugins/JoystickPlugin-4.27-Win64/ThirdParty/SDL2/Win64/SDL2.dll",
 			"Type": "NonUFS"
 		},
 		{
