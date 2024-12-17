@@ -42,28 +42,8 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UCameraComponent* QuadcopterCamera;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	UStaticMeshComponent* QuadcopterModel;
-	
-	UFUNCTION(BlueprintCallable)
-	void Throttle(float AxisInput);
-	UFUNCTION(BlueprintCallable)
-	void MouseRoll(float AxisInput);
-	UFUNCTION(BlueprintCallable)
-	void MousePitch(float AxisInput);
-	UFUNCTION(BlueprintCallable)
-	void MouseYaw(float AxisInput);
-	UFUNCTION(BlueprintCallable)
-	void KeyboardRoll(float AxisInput);
-	UFUNCTION(BlueprintCallable)
-	void KeyboardPitch(float AxisInput);
-	UFUNCTION(BlueprintCallable)
-	void KeyboardYaw(float AxisInput);
-	UFUNCTION(BlueprintCallable)
-	void StickRoll(float AxisInput);
-	UFUNCTION(BlueprintCallable)
-	void StickPitch(float AxisInput);
-	UFUNCTION(BlueprintCallable)
-	void StickYaw(float AxisInput);
+	UStaticMeshComponent* QuadcopterModel;	
+
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float ThrottleInput;
@@ -93,6 +73,7 @@ public:
 		0 = Roll
 		1 = Pitch
 		2 = Yaw
+		You can delete the second and third entry if you want your rates applied to all axes
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Config)
 	TArray<float> KeyboardRates;
@@ -123,5 +104,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float ThrusterOffset;
+
+	void GetQuadcopterInputs();
+	void ApplyQuadcopterInputs(float DeltaTime);
+
+	/// <summary>
+	/// 
+	/// </summary>
+	void InitQuadcopterPhysics();
 
 };

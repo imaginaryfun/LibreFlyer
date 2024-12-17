@@ -46,6 +46,7 @@ struct FBetaflightRates {
 		0 = Roll
 		1 = Pitch
 		2 = Yaw
+		You can delete the second and third entry if you want your rates applied to all axes
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<uint8> RcRates;
@@ -53,6 +54,7 @@ struct FBetaflightRates {
 		0 = Roll
 		1 = Pitch
 		2 = Yaw
+		You can delete the second and third entry if you want your rates applied to all axes
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<uint8> SuperRates;
@@ -60,6 +62,7 @@ struct FBetaflightRates {
 		0 = Roll
 		1 = Pitch
 		2 = Yaw
+		You can delete the second and third entry if you want your rates applied to all axes
 	*/
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<uint8> RcExpo;
