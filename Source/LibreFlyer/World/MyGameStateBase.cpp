@@ -57,7 +57,7 @@ void AMyGameStateBase::PostBeginPlay() {
 			if (i->GetPawn()) {
 				LocalQuadcopter = Cast<AQuadcopter>(i->GetPawn());
 				if (LocalQuadcopter) {
-					//LocalQuadcopter->CheckpointTriggered. Add
+					LocalQuadcopter->CheckpointTriggered.AddDynamic(this, &AMyGameStateBase::OnCheckpointTriggered);
 					LocalPlayerState = Cast<AMyPlayerState>(LocalQuadcopter->GetPlayerState());
 					if (LocalPlayerState) {
 						if (!GetDefault<ULibreFlyerEditorSettings>()->bPlayInEditorSupressGameHud) {
@@ -101,7 +101,6 @@ void AMyGameStateBase::ForceReady() {
 	if (NumberOfCheckpoints > 0) {
 		LocalPlayerState->CurrentCheckpointIndex = 0;
 		for (size_t i = 0; i < NumberOfCheckpoints; i++) {
-			Checkpoints[i]->CheckpointTrigger->OnComponentBeginOverlap.AddDynamic(this, &AMyGameStateBase::OnCheckpointTriggered);
 			Checkpoints[i]->SetCheckpointIndex(i);
 		}
 	}
@@ -111,6 +110,7 @@ void AMyGameStateBase::OnRep_Checkpoints() {
 	TryReady();
 }
 void AMyGameStateBase::OnCheckpointTriggered(const FCheckpointTriggeredEvent& CheckpointEvent) {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, "Checkpoint Triggered");
 	if (auto TriggeredCheckpoint = Cast<ACheckpoint>(CheckpointEvent.Hit.GetActor())) {
 		int32 TriggeredCheckpointIndex = -1;
 		Checkpoints.Find(TriggeredCheckpoint, TriggeredCheckpointIndex);
@@ -142,14 +142,6 @@ void AMyGameStateBase::OnCheckpointTriggered(const FCheckpointTriggeredEvent& Ch
 	//		LocalHud->OnCheckpointTriggered(NextCheckpointRay);
 	//	}
 	//}
-}
-
-
-void AMyGameStateBase::OnCheckpointTriggered(UPrimitiveComponent* OverlappedComp,
-	AActor* Other, UPrimitiveComponent* OtherComp,
-	int32 OtherBodyIndex, bool bFromSweep,
-	const FHitResult& SweepResult) {
-
 }
 void AMyGameStateBase::EndPlay(const EEndPlayReason::Type EndPlayReason) {
 	for (auto& i : GetDefault<ULibreFlyerEditorSettings>()->PlayInEditorShutdownConsoleCommands) {

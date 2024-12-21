@@ -52,45 +52,30 @@ AQuadcopter::AQuadcopter() {
 }
 void AQuadcopter::BeginPlay() {
 	Super::BeginPlay();
-	InitQuadcopterPhysics();
+	// physics
+	auto PhysicalMaterial = NewObject<UPhysicalMaterial>();
+	PhysicalMaterial->Friction = 1.f;
+	PhysicalMaterial->StaticFriction = 1.f;
+	PhysicalMaterial->Restitution = 1.f;
+	PhysicalMaterial->RaiseMassToPower = 1.f;
+	QuadcopterRoot->SetPhysMaterialOverride(PhysicalMaterial);
+	QuadcopterRoot->SetSimulatePhysics(true);
+	QuadcopterRoot->SetMassOverrideInKg(NAME_None, 1.f, true);
+	QuadcopterRoot->SetPhysicsMaxAngularVelocityInDegrees(0.f);
+	QuadcopterRoot->SetLinearDamping(1.f);
+	QuadcopterRoot->SetAngularDamping(1.f);
+	QuadcopterRoot->GetBodyInstance()->PositionSolverIterationCount = 255;
+	QuadcopterRoot->GetBodyInstance()->VelocitySolverIterationCount = 255;
+	QuadcopterRoot->GetBodyInstance()->InertiaTensorScale = FVector::ZeroVector;
+	QuadcopterRoot->GetBodyInstance()->StabilizationThresholdMultiplier = 1000.f;
+	QuadcopterRoot->GetBodyInstance()->UpdateMassProperties();
 
+	// spawn
 	AddActorLocalRotation(FRotator(-QuadcopterCamera->GetRelativeRotation().Pitch, 0.f, 0.f));
 	SpawnLocation = GetActorLocation();
 	SpawnRotation = GetActorRotation();
 }
 void AQuadcopter::Tick(float DeltaTime) {
-	GetQuadcopterInputs;
-	ApplyQuadcopterInputs;
-
-	auto CurrentLocation = RootComponent->GetComponentTransform().GetTranslation();
-	auto Hit = FHitResult();
-	GetWorld()->LineTraceSingleByChannel(
-		Hit,
-		CurrentLocation,
-		PreviousLocation,
-		ECollisionChannel::ECC_GameTraceChannel1,
-		HitParameters
-	);
-	PreviousLocation = CurrentLocation;
-	if (Hit.bBlockingHit) {
-		//if (CheckpointTriggered.IsBound()) CheckpointTriggered.Broadcast(FCheckpointTriggeredEvent(Hit));
-	}
-
-	Super::Tick(DeltaTime);
-}
-void AQuadcopter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAction(TEXT("Respawn"), IE_Pressed, this, &ThisClass::Respawn);
-}
-void AQuadcopter::SetMouseSensitivity(float NewSensitivity) {
-	FlyingMouseSensitivity = 360.f / 800.f / NewSensitivity * 2.54f;
-}
-void AQuadcopter::Respawn() {
-	SetActorLocationAndRotation(SpawnLocation, SpawnRotation);
-	QuadcopterRoot->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
-	QuadcopterRoot->SetPhysicsLinearVelocity(FVector::ZeroVector);
-}
-void AQuadcopter::GetQuadcopterInputs() {
 	// throttle
 	ThrottleInput = InputComponent->GetAxisValue("Throttle");
 	if (ThrottleInput != 0.f) {
@@ -137,10 +122,7 @@ void AQuadcopter::GetQuadcopterInputs() {
 		BetaflightRates.Apply(1, RelativeRotationInput.Pitch, FMath::Abs(RelativeRotationInput.Pitch));
 		BetaflightRates.Apply(2, RelativeRotationInput.Yaw, FMath::Abs(RelativeRotationInput.Yaw));
 	}
-}
-void AQuadcopter::ApplyQuadcopterInputs(float DeltaTime) {
-	if (bHasThrottleInput) {
-	}
+	// combine rotations
 	if (bHasAbsoluteRotationInput || bHasRelativeRotationInput) {
 		FRotator InstantaneousRotation = FRotator::ZeroRotator;
 		if (bHasRelativeRotationInput) {
@@ -155,24 +137,32 @@ void AQuadcopter::ApplyQuadcopterInputs(float DeltaTime) {
 		}
 		AddActorLocalRotation(InstantaneousRotation);
 	}
+	// checkpoint triggering
+	auto CurrentLocation = RootComponent->GetComponentTransform().GetTranslation();
+	auto Hit = FHitResult();
+	GetWorld()->LineTraceSingleByChannel(
+		Hit,
+		CurrentLocation,
+		PreviousLocation,
+		ECollisionChannel::ECC_GameTraceChannel1,
+		HitParameters
+	);
+	PreviousLocation = CurrentLocation;
+	if (Hit.bBlockingHit) {
+		if (CheckpointTriggered.IsBound()) CheckpointTriggered.Broadcast(FCheckpointTriggeredEvent(Hit, this));
+	}
 
+	Super::Tick(DeltaTime);
 }
-
-void AQuadcopter::InitQuadcopterPhysics() {
-	auto PhysicalMaterial = NewObject<UPhysicalMaterial>();
-	PhysicalMaterial->Friction = 1.f;
-	PhysicalMaterial->StaticFriction = 1.f;
-	PhysicalMaterial->Restitution = 1.f;
-	PhysicalMaterial->RaiseMassToPower = 1.f;
-	QuadcopterRoot->SetPhysMaterialOverride(PhysicalMaterial);
-	QuadcopterRoot->SetSimulatePhysics(true);
-	QuadcopterRoot->SetMassOverrideInKg(NAME_None, 1.f, true);
-	QuadcopterRoot->SetPhysicsMaxAngularVelocityInDegrees(0.f);
-	QuadcopterRoot->SetLinearDamping(1.f);
-	QuadcopterRoot->SetAngularDamping(1.f);
-	QuadcopterRoot->GetBodyInstance()->PositionSolverIterationCount = 255;
-	QuadcopterRoot->GetBodyInstance()->VelocitySolverIterationCount = 255;
-	QuadcopterRoot->GetBodyInstance()->InertiaTensorScale = FVector::ZeroVector;
-	QuadcopterRoot->GetBodyInstance()->StabilizationThresholdMultiplier = 1000.f;
-	QuadcopterRoot->GetBodyInstance()->UpdateMassProperties();
+void AQuadcopter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) {
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	PlayerInputComponent->BindAction(TEXT("Respawn"), IE_Pressed, this, &ThisClass::Respawn);
+}
+void AQuadcopter::SetMouseSensitivity(float NewSensitivity) {
+	FlyingMouseSensitivity = 360.f / 800.f / NewSensitivity * 2.54f;
+}
+void AQuadcopter::Respawn() {
+	SetActorLocationAndRotation(SpawnLocation, SpawnRotation);
+	QuadcopterRoot->SetPhysicsAngularVelocityInDegrees(FVector::ZeroVector);
+	QuadcopterRoot->SetPhysicsLinearVelocity(FVector::ZeroVector);
 }

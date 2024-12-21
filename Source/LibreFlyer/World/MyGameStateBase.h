@@ -46,19 +46,11 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	bool bFinishedBeginPlay;
 
-
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AQuadcopter* LocalQuadcopter;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	AMyPlayerState* LocalPlayerState;
 	TSharedPtr<SSlateHud> LocalHud;
-
-
-	UFUNCTION()
-	void OnCheckpointTriggered(UPrimitiveComponent* OverlappedComp,
-		AActor* Other, UPrimitiveComponent* OtherComp,
-		int32 OtherBodyIndex, bool bFromSweep,
-		const FHitResult& SweepResult);
 
 	UPROPERTY(ReplicatedUsing = OnRep_StartingBlocks, Replicated, EditAnywhere, BlueprintReadWrite)
 	TArray<AActor*> StartingBlocks;

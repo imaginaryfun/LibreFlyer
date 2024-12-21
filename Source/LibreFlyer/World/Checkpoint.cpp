@@ -79,7 +79,6 @@ void ACheckpoint::OnConstruction(const FTransform& Transform) {
 			ValidateCheckpointIndex();
 		}
 		SetCheckpointIndex(CheckpointIndex);
-
 	}
 }
 bool ACheckpoint::Rename(const TCHAR* NewName, UObject* NewOuter, ERenameFlags Flags) {

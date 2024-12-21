@@ -105,12 +105,4 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	float ThrusterOffset;
 
-	void GetQuadcopterInputs();
-	void ApplyQuadcopterInputs(float DeltaTime);
-
-	/// <summary>
-	/// 
-	/// </summary>
-	void InitQuadcopterPhysics();
-
 };
